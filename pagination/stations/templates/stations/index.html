@@ -1,0 +1,216 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Bus Stations Directory</title>
+    <meta name="description" content="Public transport stations information">
+    <meta name="author" content="Transport Service">
+
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #4cc9f0;
+            --light-gray: #f8f9fa;
+            --dark-gray: #343a40;
+            --text-color: #212529;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .header h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .station-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .station-table thead {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .station-table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .station-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .station-table tbody tr:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .station-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .pagination a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1rem;
+            min-width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .pagination .page-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: 1px solid var(--primary-color);
+        }
+
+        .pagination .page-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .pagination .current-page {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            border: 1px solid #dee2e6;
+            cursor: default;
+        }
+
+        .pagination .disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e9ecef;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .station-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .pagination {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <h1><i class="fas fa-bus"></i> Bus Stations Directory</h1>
+        <p>Find information about public transport stations in your city</p>
+    </header>
+
+    <main>
+        <table class="station-table">
+            <thead>
+            <tr>
+                <th><i class="fas fa-signature"></i> Station Name</th>
+                <th><i class="fas fa-road"></i> Street</th>
+                <th><i class="fas fa-map-marked-alt"></i> District</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for station in bus_stations %}
+                <tr>
+                    <td>{{ station.Name }}</td>
+                    <td>{{ station.Street }}</td>
+                    <td>{{ station.District }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3" style="text-align: center; padding: 2rem;">
+                        <i class="fas fa-info-circle" style="color: var(--primary-color);"></i>
+                        No stations found
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            {% if page.has_previous %}
+                <a class="page-btn" href="?page={{ page.previous_page_number }}" title="Previous page">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+            {% endif %}
+
+            <a class="current-page" href="">{{ page.number }}</a>
+
+            {% if page.has_next %}
+                <a class="page-btn" href="?page={{ page.next_page_number }}" title="Next page">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            {% endif %}
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>© {% now "Y" %} Public Transport Service. All rights reserved.</p>
+        <p>Data updated {% now "F j, Y" %}</p>
+    </footer>
+</div>
+</body>
+</html>
