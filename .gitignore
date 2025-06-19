@@ -1,3 +1,8 @@
 # created by virtualenv automatically
 .venv
 .idea
+2.1-databases/.idea
+2.1-databases/models_list_displaying/.venv
+2.1-databases/models_list_displaying/.idea
+2.1-databases/work_with_database/.venv
+2.1-databases/work_with_database/.idea
