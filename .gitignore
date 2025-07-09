@@ -10,3 +10,8 @@
 2.2-databases-2/m2m-relations/.idea
 2.2-databases-2/orm_migrations/.venv
 2.2-databases-2/orm_migrations/.idea
+3.1-drf-intro/
+3.2-crud/stocks_products/.idea
+3.2-crud/stocks_products/.venv
+3.3-permissions/api_with_restrictions/.venv
+3.3-permissions/api_with_restrictions/.idea
