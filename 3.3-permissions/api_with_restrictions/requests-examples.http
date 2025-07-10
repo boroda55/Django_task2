@@ -39,11 +39,13 @@ Authorization: Token 41ebcddea436d73017c621b2cafef1ff0855fa34
 ###
 
 # фильтрация по создателю
-GET {{baseUrl}}/advertisements/?creator=2
+GET {{baseUrl}}/advertisements/?creator=1
 Content-Type: application/json
+Authorization: Token 41ebcddea436d73017c621b2cafef1ff0855fa34
 
 ###
 
 # фильтрация по дате
 GET {{baseUrl}}/advertisements/?created_at_before=2020-10-01
 Content-Type: application/json
+Authorization: Token 41ebcddea436d73017c621b2cafef1ff0855fa34

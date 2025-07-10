@@ -1,7 +1,9 @@
 from django.contrib.auth.models import User
 from django_filters import rest_framework as filters, DateFromToRangeFilter
+from rest_framework import generics
 
 from advertisements.models import Advertisement
+from advertisements.serializers import AdvertisementSerializer
 
 
 class AdvertisementFilter(filters.FilterSet):
@@ -13,4 +15,12 @@ class AdvertisementFilter(filters.FilterSet):
 
     class Meta:
         model = Advertisement
-        fields = ('created_at',)
+        fields = ('created_at')
+
+
+class AdvertisementList(generics.ListAPIView):
+    queryset = Advertisement.objects.all()
+    serializer_class = AdvertisementSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = AdvertisementFilter
+
