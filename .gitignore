@@ -15,3 +15,5 @@
 3.2-crud/stocks_products/.venv
 3.3-permissions/api_with_restrictions/.venv
 3.3-permissions/api_with_restrictions/.idea
+3.4-django-testing/django_testing/.venv
+3.4-django-testing/django_testing/.idea
